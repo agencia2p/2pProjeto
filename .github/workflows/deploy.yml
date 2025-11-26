@@ -1,0 +1,36 @@
+name: Deploy para Hostinger via FTP
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Baixar código
+              uses: actions/checkout@v3
+
+            - name: Instalar Node
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 18
+
+            - name: Instalar dependências
+              run: npm install
+
+            - name: Build do projeto
+              run: npm run build
+
+            - name: Deploy via FTP
+              uses: SamKirkland/FTP-Deploy-Action@4.3.4
+              with:
+                  server: ${{ secrets.FTP_HOST }}
+                  username: ${{ secrets.FTP_USER }}
+                  password: ${{ secrets.FTP_PASS }}
+                  local-dir: dist
+                  server-dir: public_html
+                  protocol: ftp
+                  port: 21
