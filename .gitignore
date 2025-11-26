@@ -1,9 +1,22 @@
+# Build (não deve ir pro GitHub)
+dist/
+build/
+
+# Dependências (instaladas automaticamente no deploy)
 node_modules/
-.DS_Store
-.env
-.idea/
-.vscode/
+
+# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+
+# Sistema / Editor
+.DS_Store
+.vscode/
+.idea/
+
+# Ambiente (caso use)
+.env
+.env.local
+.env.*.local
