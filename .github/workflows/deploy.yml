@@ -33,5 +33,5 @@ jobs:
           protocol: ftps       # ou 'ftp' se der problema
           port: 21
           local-dir: dist/     # <- OBS: precisa terminar com '/'
-          server-dir: public_html
+          server-dir: public_html/
           log-level: verbose
