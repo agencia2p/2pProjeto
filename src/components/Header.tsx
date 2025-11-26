@@ -2,17 +2,25 @@ import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Button } from './ui/button';
 
+// IMPORT DO LOGO
+import logo from '../assets/logos/Logo-2p.png'; // ajuste a extensão se necessário
+
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <header className="fixed w-full bg-background/95 backdrop-blur-sm z-50 border-b border-border">
       <nav className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <div className="text-2xl font-bold">
-          <span className="text-foreground">2P</span>
-          <span className="text-primary"> Agência Digital</span>
+
+        {/* LOGO AQUI */}
+        <div className="flex items-center">
+          <img 
+            src={logo} 
+            alt="2P Agência Digital" 
+            className="h-10 md:h-12"
+          />
         </div>
-        
+
         <button 
           className="md:hidden text-primary"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
