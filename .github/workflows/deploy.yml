@@ -11,30 +11,27 @@ jobs:
 
     steps:
       - name: Baixar código
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Instalar Node
-        uses: actions/setup-node@v3
+      - name: Instalar Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 18
 
       - name: Instalar dependências
-        run: npm install
+        run: npm ci
 
       - name: Build do projeto
         run: npm run build
 
       - name: Deploy via FTP
-        uses: SamKirkland/FTP-Deploy-Action@4.3.6
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
         with:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASS }}
-          protocol: ftp
+          protocol: ftps       # ou 'ftp' se der problema
           port: 21
-
-          # LOCAL
-          local-dir: dist/
-
-          # ALTERAR PARA A PASTA DO DOMÍNIO TEMPORÁRIO
+          local-dir: dist/     # <- OBS: precisa terminar com '/'
           server-dir: whitesmoke-spoonbill-252159.hostingersite.com/public_html/
+          log-level: verbose
