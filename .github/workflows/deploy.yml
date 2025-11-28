@@ -24,14 +24,13 @@ jobs:
       - name: Build do projeto
         run: npm run build
 
-      - name: Deploy via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
-        with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USER }}
-          password: ${{ secrets.FTP_PASS }}
-          protocol: ftps       # ou 'ftp' se der problema
-          port: 21
-          local-dir: dist/     # <- OBS: precisa terminar com '/'
-          server-dir: whitesmoke-spoonbill-252159.hostingersite.com/public_html/
-          log-level: verbose
+            - name: Deploy via FTP
+              uses: SamKirkland/FTP-Deploy-Action@4.3.4
+              with:
+                  server: ${{ secrets.FTP_HOST }}
+                  username: ${{ secrets.FTP_USER }}
+                  password: ${{ secrets.FTP_PASS }}
+                  local-dir: dist/
+                  server-dir: public_html/
+                  protocol: ftp
+                  port: 21
