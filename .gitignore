@@ -4,8 +4,12 @@ build/
 
 # Dependências (instaladas automaticamente no deploy)
 node_modules/
-
-# Logs
+.DS_Store
+dist/
+.env
+.idea/
+.vscode/
+>>>>>>> a7ff54f8 (reconfigurando deploy)
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
