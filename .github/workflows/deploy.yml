@@ -13,15 +13,15 @@ jobs:
             - name: Baixar código
               uses: actions/checkout@v3
 
-            - name: Instalar Node.js
-              uses: actions/setup-node@v4
+            - name: Instalar Node
+              uses: actions/setup-node@v3
               with:
                   node-version: 18
 
             - name: Instalar dependências
               run: npm ci
 
-            - name: Build do projeto
+            - name: Build
               run: npm run build
 
             - name: Deploy via FTP
@@ -30,8 +30,7 @@ jobs:
                   server: ${{ secrets.FTP_HOST }}
                   username: ${{ secrets.FTP_USER }}
                   password: ${{ secrets.FTP_PASS }}
-                  protocol: ftp
-                  port: 21
                   local-dir: dist/
-                  server-dir: public_html/
-                  log-level: verbose
+                  server-dir: /domains/agencia2p.com.br/public_html/
+                  port: 21
+                  protocol: ftp
