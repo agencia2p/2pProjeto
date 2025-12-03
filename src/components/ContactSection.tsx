@@ -252,7 +252,7 @@ export default function ContactSection() {
             <div>
               <Textarea
                 name="message"
-                placeholder="Descreva um pouco o que você precisa? *"
+                placeholder="Descreva um pouco o que você precisa?teste *"
                 value={formData.message}
                 onChange={handleChange}
                 rows={4}
