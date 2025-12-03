@@ -1,9 +1,15 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { Checkbox } from './ui/checkbox';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from './ui/select';
 import { useToast } from '@/hooks/use-toast';
 import { z } from 'zod';
 
@@ -31,16 +37,60 @@ export default function ContactSection() {
     message: '',
     newsletter: false
   });
+
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Endpoint Formspree (substituído conforme você enviou)
+  const FORMSPREE_URL = 'https://formspree.io/f/mldqnkqk';
+  // Número do WhatsApp (se quiser trocar, altere aqui, sem sinais, com DDI+DDD)
+  const WHATS_NUMBER = '5519982752079';
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     try {
+      // validação com Zod
       contactSchema.parse(formData);
-      
-      // Create WhatsApp message
+
+      setLoading(true);
+
+      // payload a ser enviado ao Formspree
+      const payload = {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        company: formData.company,
+        position: formData.position,
+        hasStore: formData.hasStore,
+        storeUrl: formData.storeUrl,
+        newsletter: formData.newsletter ? 'Sim' : 'Não',
+        message: formData.message
+      };
+
+      const res = await fetch(FORMSPREE_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (!res.ok) {
+        let errText = '';
+        try {
+          const j = await res.json();
+          errText = JSON.stringify(j);
+        } catch {
+          errText = await res.text();
+        }
+        console.error('Formspree respondendo com erro:', errText);
+        throw new Error('Falha ao enviar o formulário. Tente novamente mais tarde.');
+      }
+
+      // mensagem WhatsApp (abrir após envio bem-sucedido)
       const whatsappMessage = encodeURIComponent(
         `Olá! Meu nome é ${formData.name}.\n\n` +
         `E-mail: ${formData.email}\n` +
@@ -52,15 +102,15 @@ export default function ContactSection() {
         `Newsletter: ${formData.newsletter ? 'Sim' : 'Não'}\n\n` +
         `Mensagem: ${formData.message}`
       );
-      
-      // Open WhatsApp (replace with actual phone number)
-      window.open(`https://wa.me/5519982752079?text=${whatsappMessage}`, '_blank');
-      
+
+      window.open(`https://wa.me/${WHATS_NUMBER}?text=${whatsappMessage}`, '_blank');
+
       toast({
         title: "Mensagem enviada!",
-        description: "Obrigado pelo contato! Entraremos em contato em breve.",
+        description: "Obrigado pelo contato! Recebemos sua mensagem.",
       });
-      
+
+      // resetar formulário
       setFormData({ name: '', email: '', phone: '', company: '', position: '', hasStore: '', storeUrl: '', message: '', newsletter: false });
       setErrors({});
     } catch (error) {
@@ -72,13 +122,21 @@ export default function ContactSection() {
           }
         });
         setErrors(newErrors);
+      } else {
+        console.error('Erro no envio do formulário:', error);
+        toast({
+          title: "Erro ao enviar",
+          description: "Ocorreu um problema ao enviar sua mensagem. Tente novamente mais tarde.",
+          variant: 'destructive'
+        });
       }
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    // Clear error when user starts typing
     if (errors[e.target.name]) {
       setErrors({ ...errors, [e.target.name]: '' });
     }
@@ -211,17 +269,4 @@ export default function ContactSection() {
               />
               <label
                 htmlFor="newsletter"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                Aceita receber e-mails com novidades?
-              </label>
-            </div>
-            
-            <Button type="submit" variant="hero" className="w-full" size="lg">
-              Enviar Mensagem
-            </Button>
-        </form>
-      </div>
-    </section>
-  );
-}
+                class
