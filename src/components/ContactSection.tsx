@@ -269,4 +269,17 @@ export default function ContactSection() {
               />
               <label
                 htmlFor="newsletter"
-                class
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                Aceita receber e-mails com novidades?
+              </label>
+            </div>
+            
+            <Button type="submit" variant="hero" className="w-full" size="lg" disabled={loading}>
+              {loading ? 'Enviando...' : 'Enviar Mensagem'}
+            </Button>
+        </form>
+      </div>
+    </section>
+  );
+}
