@@ -54,7 +54,7 @@ export default function ContactSection() {
       );
       
       // Open WhatsApp (replace with actual phone number)
-      window.open(`https://wa.me/5511999999999?text=${whatsappMessage}`, '_blank');
+      window.open(`https://wa.me/5519982752079?text=${whatsappMessage}`, '_blank');
       
       toast({
         title: "Mensagem enviada!",
