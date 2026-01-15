@@ -80,7 +80,7 @@ const ElegantShape: React.FC<ElegantShapeProps> = React.memo(function ElegantSha
 /* ---------- HeroSection ---------- */
 export default function HeroSection({
   badge = "2P Agencia Digital",
-  title1 = "Seu e-commerce pode ser muito mais do que bonito",
+  title1 = "Seu negocio pode ser muito mais do que bonito",
   title2 = "pode ser",
   // title3 aceita string (fixo) ou string[] (vai ciclar)
   title3 = ["lucrativo", "escalável", "estratégico", "imbatível"],

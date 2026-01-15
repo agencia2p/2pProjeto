@@ -32,7 +32,7 @@ export default function AdditionalServicesSection() {
     <section className="py-20 px-4 bg-[var(--gradient-subtle)]">
       <div className="container mx-auto">
         <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center">
-          Além do <span className="text-primary">E-commerce</span>
+         Serviços de <span className="text-primary">Marketing Digital</span>
         </h2>
 
         <div className="grid md:grid-cols-3 gap-6">
